@@ -194,7 +194,7 @@ library(dplyr)
 fx_tidy <- fx %>% group_by(subject_id,activity_id) %>% summarise_each(funs(mean))
 
 # Output tidy dataset
-write.table(fx_tidy, 'tidy_data.txt')
+write.table(fx_tidy, 'tidy_data.txt',row.name=FALSE )
 
 setwd('..')
 
