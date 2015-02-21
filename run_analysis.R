@@ -171,27 +171,25 @@ body_gyro=rbind(body_gyro.test,body_gyro.train)
 body_acc=rbind(body_acc.test,body_acc.train)
 total_acc=rbind(total_acc.test,total_acc.train)
 }
-
+# Merge Test and Train, similar to SQL UNION
 functions=rbind(functions.test,functions.train)
 
-
-
-#Taking only the needed columns
+#Taking only the needed columns. 1=subject_id, 2=activity_id, the rest are the features or aggregate functions
 fx=functions[,c(1,2,adj_req_fx_ids)]
 
-# Assigning names to columns
-names(fx)=c('subject_id','activity_id',fx_names[req_fx_ids,2])
+# Assigning proper names to columns
+names(fx)=c('subject_id','activity',fx_names[req_fx_ids,2])
 
 #Replace id with labels for activity type
-fx$activity_id <- factor(fx$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
+fx$activity <- factor(fx$activity,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
 
 # Now let's get powered by dplyr
 library(dplyr)
 
 # Calculate the means for each variable in each group. Why this? it corresponds to the average of the measures for one subject for one type of activity, like, WALKING (each activity is executed by each subjet multiple times)
 
-# Group by subject and activity
-fx_tidy <- fx %>% group_by(subject_id,activity_id) %>% summarise_each(funs(mean))
+# GROUP BY subject and activity, very powerful statement, equivalent to SQL GROUP BY, but better, you don't have to manually specify the columns to apply the mean() function on all of them! 
+fx_tidy <- fx %>% group_by(subject_id,activity) %>% summarise_each(funs(mean))
 
 # Output tidy dataset
 write.table(fx_tidy, 'tidy_data.txt',row.name=FALSE )
