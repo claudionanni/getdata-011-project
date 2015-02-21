@@ -71,88 +71,92 @@ I find it more intuitive because each of the 561 value is calculated operating o
 
 ### feature
 
-  * Description: The feature measured.  The following describes how to interpret each feature name
+  * Description: The feature measured.  The following describes how to interpret each feature name(name were transformed to made them easy to understand)
     * Prefix:
-      * t: time domain signal
-      * f: fast fourier transformed
+      * time: time domain signal
+      * frequency: fast fourier transformed
     * Raw signal source instrument:
-      * Acc: Accelerometer
-      * Gyro: Gyroscope
+      * Accelerometer: Accelerometer
+      * Gyroscope: Gyroscope
         * For the Gyroscopic measure, Body and Gravity measures were separated
     * Other attributes:
       * Jerk: measures derived in time
       * Mag: Euclidean norm magnitude of Jerk signals
       * X, Y, Z: axis of the feature
-      * mean: Mean of the feature
-      * std: Standard deviation of the feature
+      * Mean: Mean of the feature
+      * Std: Standard deviation of the feature
   * Data Type/Units: string
-  * Values:
-    * fBodyAcc.X.mean
-    * fBodyAcc.X.std
-    * fBodyAcc.Y.mean
-    * fBodyAcc.Y.std
-    * fBodyAcc.Z.mean
-    * fBodyAcc.Z.std
-    * fBodyAccJerk.X.mean
-    * fBodyAccJerk.X.std
-    * fBodyAccJerk.Y.mean
-    * fBodyAccJerk.Y.std
-    * fBodyAccJerk.Z.mean
-    * fBodyAccJerk.Z.std
-    * fBodyAccMag.mean
-    * fBodyAccMag.std
-    * fBodyBodyAccJerkMag.mean
-    * fBodyBodyAccJerkMag.std
-    * fBodyBodyGyroJerkMag.mean
-    * fBodyBodyGyroJerkMag.std
-    * fBodyBodyGyroMag.mean
-    * fBodyBodyGyroMag.std
-    * fBodyGyro.X.mean
-    * fBodyGyro.X.std
-    * fBodyGyro.Y.mean
-    * fBodyGyro.Y.std
-    * fBodyGyro.Z.mean
-    * fBodyGyro.Z.std
-    * tBodyAcc.X.mean
-    * tBodyAcc.X.std
-    * tBodyAcc.Y.mean
-    * tBodyAcc.Y.std
-    * tBodyAcc.Z.mean
-    * tBodyAcc.Z.std
-    * tBodyAccJerk.X.mean
-    * tBodyAccJerk.X.std
-    * tBodyAccJerk.Y.mean
-    * tBodyAccJerk.Y.std
-    * tBodyAccJerk.Z.mean
-    * tBodyAccJerk.Z.std
-    * tBodyAccJerkMag.mean
-    * tBodyAccJerkMag.std
-    * tBodyAccMag.mean
-    * tBodyAccMag.std
-    * tBodyGyro.X.mean
-    * tBodyGyro.X.std
-    * tBodyGyro.Y.mean
-    * tBodyGyro.Y.std
-    * tBodyGyro.Z.mean
-    * tBodyGyro.Z.std
-    * tBodyGyroJerk.X.mean
-    * tBodyGyroJerk.X.std
-    * tBodyGyroJerk.Y.mean
-    * tBodyGyroJerk.Y.std
-    * tBodyGyroJerk.Z.mean
-    * tBodyGyroJerk.Z.std
-    * tBodyGyroJerkMag.mean
-    * tBodyGyroJerkMag.std
-    * tBodyGyroMag.mean
-    * tBodyGyroMag.std
-    * tGravityAcc.X.mean
-    * tGravityAcc.X.std
-    * tGravityAcc.Y.mean
-    * tGravityAcc.Y.std
-    * tGravityAcc.Z.mean
-    * tGravityAcc.Z.std
-    * tGravityAccMag.mean
-    * tGravityAccMag.std
+* Values:
+ * frequencyBodyAccelerometerJerkMagnitudeMean
+ * frequencyBodyAccelerometerJerkMagnitudeStd
+	* frequencyBodyAccelerometerJerkMeanX
+	* frequencyBodyAccelerometerJerkMeanY
+	* frequencyBodyAccelerometerJerkMeanZ
+	* frequencyBodyAccelerometerJerkStdX
+	* frequencyBodyAccelerometerJerkStdY
+	* frequencyBodyAccelerometerJerkStdZ
+	* frequencyBodyAccelerometerMagnitudeMean
+	* frequencyBodyAccelerometerMagnitudeStd
+	* frequencyBodyAccelerometerMeanX
+	* frequencyBodyAccelerometerMeanY
+	* frequencyBodyAccelerometerMeanZ
+	* frequencyBodyAccelerometerStdX
+	* frequencyBodyAccelerometerStdY
+	* frequencyBodyAccelerometerStdZ
+	* frequencyBodyGyroscopeJerkMagnitudeMean
+	* frequencyBodyGyroscopeJerkMagnitudeStd
+	* frequencyBodyGyroscopeMagnitudeMean
+	* frequencyBodyGyroscopeMagnitudeStd
+	* frequencyBodyGyroscopeMeanX
+	* frequencyBodyGyroscopeMeanY
+	* frequencyBodyGyroscopeMeanZ
+	* frequencyBodyGyroscopeStdX
+	* frequencyBodyGyroscopeStdY
+	* frequencyBodyGyroscopeStdZ
+	* timeBodyAccelerometerJerkMagnitudeMean
+	* timeBodyAccelerometerJerkMagnitudeStd
+	* timeBodyAccelerometerJerkMeanX
+	* timeBodyAccelerometerJerkMeanY
+	* timeBodyAccelerometerJerkMeanZ
+	* timeBodyAccelerometerJerkStdX
+	* timeBodyAccelerometerJerkStdY
+	* timeBodyAccelerometerJerkStdZ
+	* timeBodyAccelerometerMagnitudeMean
+	* timeBodyAccelerometerMagnitudeStd
+	* timeBodyAccelerometerMeanX
+	* timeBodyAccelerometerMeanY
+	* timeBodyAccelerometerMeanZ
+	* timeBodyAccelerometerStdX
+	* timeBodyAccelerometerStdY
+	* timeBodyAccelerometerStdZ
+	* timeBodyGyroscopeJerkMagnitudeMean
+	* timeBodyGyroscopeJerkMagnitudeStd
+	* timeBodyGyroscopeJerkMeanX
+	* timeBodyGyroscopeJerkMeanY
+	* timeBodyGyroscopeJerkMeanZ
+	* timeBodyGyroscopeJerkStdX
+	* timeBodyGyroscopeJerkStdY
+	* timeBodyGyroscopeJerkStdZ
+	* timeBodyGyroscopeMagnitudeMean
+	* timeBodyGyroscopeMagnitudeStd
+	* timeBodyGyroscopeMeanX
+	* timeBodyGyroscopeMeanY
+	* timeBodyGyroscopeMeanZ
+	* timeBodyGyroscopeStdX
+	* timeBodyGyroscopeStdY
+	* timeBodyGyroscopeStdZ
+	* timeGravityAccelerometerMagnitudeMean
+	* timeGravityAccelerometerMagnitudeStd
+	* timeGravityAccelerometerMeanX
+	* timeGravityAccelerometerMeanY
+	* timeGravityAccelerometerMeanZ
+	* timeGravityAccelerometerStdX
+	* timeGravityAccelerometerStdY
+	* timeGravityAccelerometerStdZ
+
+ 
+
+
 
 ### average
 
