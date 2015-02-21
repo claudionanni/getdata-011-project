@@ -39,17 +39,22 @@ if (!file.exists('ucihar-data.zip')) {
 # train/total_acc_y_train.txt
 # train/total_acc_z_train.txt
 
-#cat k | awk '{print $2}' | awk -F"/" '{print $2" <- read.csv(\x27"$1"/"$2"\x27)"}'
-#find . -name '*' | egrep "Inertial" | awk -F"/" '{print $4" <- read.csv(\x27"$0"\x27)"}'
 
 setwd('UCI HAR Dataset')
 
 
+# Get activity labels
 activity_labels <- read.csv('activity_labels.txt',sep="",header=FALSE)
 
+# Get all function names and then filter only the wanted ones, also create a vector of indexes of such function name
 fx_names <- read.table("features.txt", header=F, as.is=T, col.names=c("FeatureID", "FeatureName"))
 req_fx_ids <- grep(".*mean\\(\\)|.*std\\(\\)", function_names$FeatureName)
+
+# Adjusted index, in my final dataset I have 2 columns before, subject_id and activity_id
 adj_req_fx_ids = req_fx_ids + 2
+
+
+## NOTE: I read all data, even if only the part of the functions is used. 
 
 ## TEST BLOCK ##
 
@@ -132,43 +137,22 @@ functions=rbind(functions.test,functions.train)
 
 # Note columns are shifted +2 on the right, so all values need +2
 
-# 1 tBodyAcc-mean()-X
-# 2 tBodyAcc-mean()-Y
-# 3 tBodyAcc-mean()-Z
-# 4 tBodyAcc-std()-X
-# 5 tBodyAcc-std()-Y
-# 6 tBodyAcc-std()-Z
-# 121 tBodyGyro-mean()-X
-# 122 tBodyGyro-mean()-Y
-# 123 tBodyGyro-mean()-Z
-# 124 tBodyGyro-std()-X
-# 125 tBodyGyro-std()-Y
-# 126 tBodyGyro-std()-Z
-
-
-
-
 fx=functions[,c(1,2,adj_req_fx_ids)]
 
 # Assigning names to columns
-# Assigning names to columns
-# Assigning names to columns
-
-
 names(fx)=c('subject_id','activity_id',fx_names[req_fx_ids,2])
-
 
 #Adding a column with descriptive names of activities
 fx$activity_name <- factor(fx$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
 
 library(dplyr)
 
-# Group by subject and activity
-#fx_grouped <- group_by(fx, subject_id,activity_id)
-
 # Calculate the means for each variable in each group. Why this? it corresponds to the average of the measures for one subject for one type of activity, like, WALKING (each activity is executed by each subjet multiple times)
 
+# Group by subject and activity
 fx_tidy <- fx %>% group_by(subject_id,activity_id) %>% summarise_each(funs(mean))
+
+#Adding a column with descriptive names of activities also to the tidy dataset
 fx_tidy$activity_name <- factor(fx_tidy$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
 
 write.table(fx_tidy, 'tidy_data.txt')
