@@ -126,9 +126,6 @@ total_acc=rbind(total_acc.test,total_acc.train)
 functions=rbind(functions.test,functions.train)
 
 
-#At this point we miss the descriptive names of the activities in the second column of the data.frame
-
-#Also, we need to take only some of the columns :
 
 # Note columns are shifted +2 on the right, so all values need +2
 
@@ -148,9 +145,22 @@ functions=rbind(functions.test,functions.train)
 
 fx=functions[,c(1,2,3,4,5,6,7,8,123,124,125,126,127,128)]
 
-names(fx)=c('subject_id','activity_id','tBodyAcc-mean()-X', 'tBodyAcc-mean()-Y', 'tBodyAcc-mean()-Z', 'tBodyAcc-std()-X', 'tBodyAcc-std()-Y', 'tBodyAcc-std()-Z', 'tBodyGyro-mean()-X', 'tBodyGyro-mean()-Y', 'tBodyGyro-mean()-Z', 'tBodyGyro-std()-X', 'tBodyGyro-std()-Y', 'tBodyGyro-std()-Z')
+# Assigning names to columns
+# Assigning names to columns
+# Assigning names to columns
+names(fx)=c('subject_id','activity_id','tBodyAcc_mean_X', 'tBodyAcc_mean_Y', 'tBodyAcc_mean_Z', 'tBodyAcc_std_X', 'tBodyAcc_std_Y', 'tBodyAcc_std_Z', 'tBodyGyro_mean_X', 'tBodyGyro_mean_Y', 'tBodyGyro_mean_Z', 'tBodyGyro_std_X', 'tBodyGyro_std_Y', 'tBodyGyro_std_Z')
 
+#Adding a column with descriptive names of activities
 fx$activity_name <- factor(fx$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
+
+library(dplyr)
+
+# Group by subject and activity
+fx_grouped <- group_by(fx, subject_id,activity_id)
+
+# Calculate the means for each variable in each group. Why this? it corresponds to the average of the measures for one subject for one type of activity, like, WALKING (each activity is executed by each subjet multiple times)
+fx_tidy <- summarize(fx_grouped,mean(tBodyAcc_mean_X),  mean(tBodyAcc_mean_Y),  mean(tBodyAcc_mean_Z),  mean(tBodyAcc_std_X),  mean(tBodyAcc_std_Y),  mean(tBodyAcc_std_Z),  mean(tBodyGyro_mean_X),  mean(tBodyGyro_mean_Y),  mean(tBodyGyro_mean_Z),  mean(tBodyGyro_std_X),  mean(tBodyGyro_std_Y),  mean(tBodyGyro_std_Z))
+
 
 setwd('..')
 
