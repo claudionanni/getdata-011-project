@@ -47,6 +47,9 @@ setwd('UCI HAR Dataset')
 
 activity_labels <- read.csv('activity_labels.txt',sep="",header=FALSE)
 
+fx_names <- read.table("features.txt", header=F, as.is=T, col.names=c("FeatureID", "FeatureName"))
+req_fx_ids <- grep(".*mean\\(\\)|.*std\\(\\)", function_names$FeatureName)
+adj_req_fx_ids = req_fx_ids + 2
 
 ## TEST BLOCK ##
 
@@ -143,12 +146,17 @@ functions=rbind(functions.test,functions.train)
 # 126 tBodyGyro-std()-Z
 
 
-fx=functions[,c(1,2,3,4,5,6,7,8,123,124,125,126,127,128)]
+
+
+fx=functions[,c(1,2,adj_req_fx_ids)]
 
 # Assigning names to columns
 # Assigning names to columns
 # Assigning names to columns
-names(fx)=c('subject_id','activity_id','tBodyAcc_mean_X', 'tBodyAcc_mean_Y', 'tBodyAcc_mean_Z', 'tBodyAcc_std_X', 'tBodyAcc_std_Y', 'tBodyAcc_std_Z', 'tBodyGyro_mean_X', 'tBodyGyro_mean_Y', 'tBodyGyro_mean_Z', 'tBodyGyro_std_X', 'tBodyGyro_std_Y', 'tBodyGyro_std_Z')
+
+
+names(fx)=c('subject_id','activity_id',fx_names[req_fx_ids,2])
+
 
 #Adding a column with descriptive names of activities
 fx$activity_name <- factor(fx$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
@@ -156,11 +164,14 @@ fx$activity_name <- factor(fx$activity_id,levels = c(1,2,3,4,5,6), labels = c("W
 library(dplyr)
 
 # Group by subject and activity
-fx_grouped <- group_by(fx, subject_id,activity_id)
+#fx_grouped <- group_by(fx, subject_id,activity_id)
 
 # Calculate the means for each variable in each group. Why this? it corresponds to the average of the measures for one subject for one type of activity, like, WALKING (each activity is executed by each subjet multiple times)
-fx_tidy <- summarize(fx_grouped,mean(tBodyAcc_mean_X),  mean(tBodyAcc_mean_Y),  mean(tBodyAcc_mean_Z),  mean(tBodyAcc_std_X),  mean(tBodyAcc_std_Y),  mean(tBodyAcc_std_Z),  mean(tBodyGyro_mean_X),  mean(tBodyGyro_mean_Y),  mean(tBodyGyro_mean_Z),  mean(tBodyGyro_std_X),  mean(tBodyGyro_std_Y),  mean(tBodyGyro_std_Z))
 
+fx_tidy <- fx %>% group_by(subject_id,activity_id) %>% summarise_each(funs(mean))
+fx_tidy$activity_name <- factor(fx_tidy$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
+
+write.table(fx_tidy, 'tidy_data.txt')
 
 setwd('..')
 
