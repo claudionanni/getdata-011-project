@@ -1,10 +1,13 @@
+### run_analysis.R : download, merge, clean, export  dataset from UCI HAR dataset ### 
+
+
+# Download zip file if not done already
 if (!file.exists('ucihar-data.zip')) {
     download.file(paste0('https://d396qusza40orc.cloudfront.net/',
                          'getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'),
                   method='curl', destfile='ucihar-data.zip')
     unzip('ucihar-data.zip')
 }
-
 
 # This datasets contain data from Subjects who execute Activities, each Activity is executed N times, and it produces 128 measures of three types:
 
@@ -13,7 +16,6 @@ if (!file.exists('ucihar-data.zip')) {
 # total_acc 
 
 # There are two groups, Train and Test
-
 
 # Note: I define here 1 observation = 1 row , even if it is composed by 128 samples (just a matter of interpretation)
 # Remember, 1 observation is 1 subject who does 1 activity (of a certain type), during which 128 samples of each type (body_acc,body_gyro,total_acc) is collected for all three axis
@@ -58,10 +60,8 @@ if (!file.exists('ucihar-data.zip')) {
 # train/total_acc_z_train.txt
 
 
-
-
+# cd into the directory with data
 setwd('UCI HAR Dataset')
-
 
 # Get activity labels for later
 activity_labels <- read.csv('activity_labels.txt',sep="",header=FALSE)
@@ -182,9 +182,10 @@ fx=functions[,c(1,2,adj_req_fx_ids)]
 # Assigning names to columns
 names(fx)=c('subject_id','activity_id',fx_names[req_fx_ids,2])
 
-#Adding a column with descriptive names of activities
+#Replace id with labels for activity type
 fx$activity_id <- factor(fx$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
 
+# Now let's get powered by dplyr
 library(dplyr)
 
 # Calculate the means for each variable in each group. Why this? it corresponds to the average of the measures for one subject for one type of activity, like, WALKING (each activity is executed by each subjet multiple times)
@@ -192,9 +193,7 @@ library(dplyr)
 # Group by subject and activity
 fx_tidy <- fx %>% group_by(subject_id,activity_id) %>% summarise_each(funs(mean))
 
-#Adding a column with descriptive names of activities also to the tidy dataset
-#fx_tidy$activity_name <- factor(fx_tidy$activity_id,levels = c(1,2,3,4,5,6), labels = c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING","STANDING","LAYING"))
-
+# Output tidy dataset
 write.table(fx_tidy, 'tidy_data.txt')
 
 setwd('..')
