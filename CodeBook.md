@@ -87,8 +87,8 @@ I find it more intuitive because each of the 561 value is calculated operating o
       * Std: Standard deviation of the feature
   * Data Type/Units: string
 * Values:
- * frequencyBodyAccelerometerJerkMagnitudeMean
- * frequencyBodyAccelerometerJerkMagnitudeStd
+ 	* frequencyBodyAccelerometerJerkMagnitudeMean
+ 	* frequencyBodyAccelerometerJerkMagnitudeStd
 	* frequencyBodyAccelerometerJerkMeanX
 	* frequencyBodyAccelerometerJerkMeanY
 	* frequencyBodyAccelerometerJerkMeanZ
