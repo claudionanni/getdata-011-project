@@ -71,7 +71,7 @@ I find it more intuitive because each of the 561 value is calculated operating o
 
 ### feature
 
-  * Description: The feature measured.  The following describes how to interpret each feature name(name were transformed to made them easy to understand)
+  * Description: The feature measured.  The following describes how to interpret each feature name, names were transformed to made them easy to understand and legal in R.
     * Prefix:
       * time: time domain signal
       * frequency: fast fourier transformed
@@ -156,15 +156,6 @@ I find it more intuitive because each of the 561 value is calculated operating o
 
  
 
-
-
-### average
-
-  * Description: Mean of the given feature variable by subject and activity
-  * Data Type/Units: numeric, normalized and bounded within [-1, 1]
-  * Values:
-    * [-1, 1]
-    * 
 
 
 ## Transformation details
