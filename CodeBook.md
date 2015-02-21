@@ -43,10 +43,16 @@ The following files are available for the train and test data. Their description
 
 - 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second.
 
+- functions / aggregate functions
+I use 'aggregate function' or 'function' for the data contained in the features.txt file, 
+I find it more intuitive because each of the 561 value is calculated operating on all the 128 observations (made of 3 samples each, x,y,x). Also, I prefer to use 'observation' and 'measureament' only for the raw data sampled by the device.
+
+
 
 ## Transformation details
 
-There are X parts:
+There are 6 parts:
+
 
 1. The three independent files that contain Subject_id, Activity_id, and the 561 aggregate function calculations are loaded and bound together in one data frame (for both Test and Train)
 2. These two data frames are merged (union) forming one data frame for a total of  2947 + 7352 = 10299 rows.
